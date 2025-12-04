@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+
+import { UsersModule } from './components/users/users.module';
+import { FormatsModule } from './components/formats/formats.module';
+import { SurveysModule } from './components/surveys/surveys.module';
+
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { PaginationInterceptor } from './utils/interceptors/pagination.interceptor';
 
 @Module({
   imports: [
@@ -33,8 +40,16 @@ import { UsersModule } from './users/users.module';
     }),
 
     UsersModule,
+    FormatsModule,
+    SurveysModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: PaginationInterceptor,
+    }
+  ],
 })
 export class AppModule { }

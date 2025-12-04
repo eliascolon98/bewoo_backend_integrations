@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { PaginationDto } from './dto/pagination.dto';
+import { PaginationDto } from '../../utils/paginations/pagination.dto';
 
 @ApiTags('users')
 @Controller('users')
